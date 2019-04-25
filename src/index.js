@@ -7,10 +7,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import './index.css';
-import configureStore from './store/configureStore';
+import store from './store/configureStore';
 
-
-const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>

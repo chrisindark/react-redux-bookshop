@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import * as bookActions from '../../actions/bookActions';
 
 
-class Book extends React.Component {
+class Book extends Component {
     constructor(props) {
-        // Pass props back to parent
         super(props);
+
+        this.titleInput = null;
     }
 
     componentWillMount() {
@@ -26,33 +27,28 @@ class Book extends React.Component {
 
     // Submit book handler
     submitBook(input) {
-        console.log('Submitted');
+        console.log('Submitted', input);
+        this.props.createBook(input);
+    }
+
+    onSubmitCallback = (e) => {
+        e.preventDefault();
+        const input = {title: this.titleInput.value};
+        this.submitBook(input);
+        e.target.reset();
     }
 
     render() {
-        // Title input tracker
-        let titleInput;
-        // return JSX
         return(
             <div>
                 <h3>Books</h3>
                 <ul>
-                    {/* Traverse books array  */}
-                    {this.props.books.results && this.props.books.results.map((b, i) => <li key={i}>{b.title}</li> )}
+                    {this.props.books && this.props.books.map((b, i) => <li key={i}>{b.title}</li> )}
                 </ul>
                 <div>
                     <h3>Books Form</h3>
-                    <form onSubmit={e => {
-                        // Prevent request
-                        e.preventDefault();
-                        // Assemble inputs
-                        const input = {title: titleInput.value};
-                        // Call handler
-                        this.submitBook(input);
-                        // Reset form
-                        e.target.reset();
-                    }}>
-                        <input type="text" name="title" ref={node => titleInput = node}/>
+                    <form onSubmit={this.onSubmitCallback}>
+                        <input type="text" name="title" ref={node => this.titleInput = node}/>
                         <input type="submit" />
                     </form>
                 </div>
@@ -73,7 +69,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchBooks: () => dispatch(bookActions.fetchBooks()),
-        // You can now say this.props.createBook
         createBook: book => dispatch(bookActions.createBook(book))
     }
 };

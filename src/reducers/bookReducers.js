@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 
-export const booksReducer = (state = {}, action) => {
+export const booksReducer = (state = [], action) => {
     // console.log(action, state);
     switch (action.type) {
         // Check if action dispatched is

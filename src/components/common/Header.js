@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-// The Header creates links that can be used to navigate
-// between routes.
+
 const Header = (props) => (
     <div className="container">
         <nav className="navbar navbar-default">
@@ -21,7 +20,7 @@ const Header = (props) => (
                 </div>
             </div>
         </nav>
-        {/* Each smaller components */}
+
         {props.children}
     </div>
 );
